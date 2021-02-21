@@ -129,7 +129,7 @@
               v-for="(line, index) in lyricWithTranslation"
               :key="index"
               :id="`line${index}`"
-              @click="seek(line.time)"
+              @click="clickLyricLine(line.time)"
               ><span v-html="formatLine(line)"></span
             ></div>
           </div>
@@ -269,6 +269,11 @@ export default {
     seek(value) {
       this.$parent.$refs.player.setProgress(value);
       this.$parent.$refs.player.player.seek(value);
+    },
+    clickLyricLine(value) {
+      if (window.getSelection().toString().length === 0) {
+        this.seek(value);
+      }
     },
     setLyricsInterval() {
       this.lyricsInterval = setInterval(() => {
